@@ -1,0 +1,655 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище PlanningTheEPModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Day">
+          <Key>
+            <PropertyRef Name="Id_Day" />
+          </Key>
+          <Property Name="Id_Day" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FirstPlan">
+          <Key>
+            <PropertyRef Name="Id_FPlan" />
+          </Key>
+          <Property Name="Id_FPlan" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Subject" Type="bigint" />
+          <Property Name="Id_SubjectArea" Type="bigint" />
+          <Property Name="Id_Grade" Type="bigint" Nullable="false" />
+          <Property Name="NumberOfHours" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FullAndFirst">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Id_Plan" />
+            <PropertyRef Name="Id_FPlan" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Plan" Type="bigint" Nullable="false" />
+          <Property Name="Id_FPlan" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FullPlan">
+          <Key>
+            <PropertyRef Name="Id_Plan" />
+          </Key>
+          <Property Name="Id_Plan" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NamePlan" Type="nchar" MaxLength="200" Nullable="false" />
+          <Property Name="Id_Type" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Grade">
+          <Key>
+            <PropertyRef Name="Id_Grade" />
+          </Key>
+          <Property Name="Id_Grade" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="Id_Schedule" />
+          </Key>
+          <Property Name="Id_Schedule" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Grade" Type="bigint" Nullable="false" />
+          <Property Name="Id_Day" Type="bigint" Nullable="false" />
+          <Property Name="Id_Subject" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="Id_Subject" />
+          </Key>
+          <Property Name="Id_Subject" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubjectArea">
+          <Key>
+            <PropertyRef Name="Id_SubjectArea" />
+          </Key>
+          <Property Name="Id_SubjectArea" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="Id_Type" />
+          </Key>
+          <Property Name="Id_Type" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Worker">
+          <Key>
+            <PropertyRef Name="Id_worker" />
+          </Key>
+          <Property Name="Id_worker" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="Position" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_FirstPlan_Grade">
+          <End Role="Grade" Type="Self.Grade" Multiplicity="1" />
+          <End Role="FirstPlan" Type="Self.FirstPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grade">
+              <PropertyRef Name="Id_Grade" />
+            </Principal>
+            <Dependent Role="FirstPlan">
+              <PropertyRef Name="Id_Grade" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FirstPlan_Subject">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
+          <End Role="FirstPlan" Type="Self.FirstPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Id_Subject" />
+            </Principal>
+            <Dependent Role="FirstPlan">
+              <PropertyRef Name="Id_Subject" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FirstPlan_SubjectArea">
+          <End Role="SubjectArea" Type="Self.SubjectArea" Multiplicity="0..1" />
+          <End Role="FirstPlan" Type="Self.FirstPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubjectArea">
+              <PropertyRef Name="Id_SubjectArea" />
+            </Principal>
+            <Dependent Role="FirstPlan">
+              <PropertyRef Name="Id_SubjectArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FullAndFirst_FirstPlan">
+          <End Role="FirstPlan" Type="Self.FirstPlan" Multiplicity="1" />
+          <End Role="FullAndFirst" Type="Self.FullAndFirst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirstPlan">
+              <PropertyRef Name="Id_FPlan" />
+            </Principal>
+            <Dependent Role="FullAndFirst">
+              <PropertyRef Name="Id_FPlan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FullAndFirst_FullPlan">
+          <End Role="FullPlan" Type="Self.FullPlan" Multiplicity="1" />
+          <End Role="FullAndFirst" Type="Self.FullAndFirst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FullPlan">
+              <PropertyRef Name="Id_Plan" />
+            </Principal>
+            <Dependent Role="FullAndFirst">
+              <PropertyRef Name="Id_Plan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FullPlan_Type">
+          <End Role="Type" Type="Self.Type" Multiplicity="1" />
+          <End Role="FullPlan" Type="Self.FullPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="Id_Type" />
+            </Principal>
+            <Dependent Role="FullPlan">
+              <PropertyRef Name="Id_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Day">
+          <End Role="Day" Type="Self.Day" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Day">
+              <PropertyRef Name="Id_Day" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="Id_Day" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Grade">
+          <End Role="Grade" Type="Self.Grade" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grade">
+              <PropertyRef Name="Id_Grade" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="Id_Grade" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Subject">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Id_Subject" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="Id_Subject" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище PlanningTheEPModelContainer">
+          <EntitySet Name="Day" EntityType="Self.Day" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FirstPlan" EntityType="Self.FirstPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FullAndFirst" EntityType="Self.FullAndFirst" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FullPlan" EntityType="Self.FullPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grade" EntityType="Self.Grade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubjectArea" EntityType="Self.SubjectArea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Worker" EntityType="Self.Worker" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FirstPlan_Grade" Association="Self.FK_FirstPlan_Grade">
+            <End Role="Grade" EntitySet="Grade" />
+            <End Role="FirstPlan" EntitySet="FirstPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FirstPlan_Subject" Association="Self.FK_FirstPlan_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="FirstPlan" EntitySet="FirstPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FirstPlan_SubjectArea" Association="Self.FK_FirstPlan_SubjectArea">
+            <End Role="SubjectArea" EntitySet="SubjectArea" />
+            <End Role="FirstPlan" EntitySet="FirstPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FullAndFirst_FirstPlan" Association="Self.FK_FullAndFirst_FirstPlan">
+            <End Role="FirstPlan" EntitySet="FirstPlan" />
+            <End Role="FullAndFirst" EntitySet="FullAndFirst" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FullAndFirst_FullPlan" Association="Self.FK_FullAndFirst_FullPlan">
+            <End Role="FullPlan" EntitySet="FullPlan" />
+            <End Role="FullAndFirst" EntitySet="FullAndFirst" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FullPlan_Type" Association="Self.FK_FullPlan_Type">
+            <End Role="Type" EntitySet="Type" />
+            <End Role="FullPlan" EntitySet="FullPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Day" Association="Self.FK_Schedule_Day">
+            <End Role="Day" EntitySet="Day" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Grade" Association="Self.FK_Schedule_Grade">
+            <End Role="Grade" EntitySet="Grade" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Subject" Association="Self.FK_Schedule_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PlanningTheEPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Day">
+          <Key>
+            <PropertyRef Name="Id_Day" />
+          </Key>
+          <Property Name="Id_Day" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK_Schedule_Day" FromRole="Day" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="FirstPlan">
+          <Key>
+            <PropertyRef Name="Id_FPlan" />
+          </Key>
+          <Property Name="Id_FPlan" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Subject" Type="Int64" />
+          <Property Name="Id_SubjectArea" Type="Int64" />
+          <Property Name="Id_Grade" Type="Int64" Nullable="false" />
+          <Property Name="NumberOfHours" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Grade" Relationship="Self.FK_FirstPlan_Grade" FromRole="FirstPlan" ToRole="Grade" />
+          <NavigationProperty Name="Subject" Relationship="Self.FK_FirstPlan_Subject" FromRole="FirstPlan" ToRole="Subject" />
+          <NavigationProperty Name="SubjectArea" Relationship="Self.FK_FirstPlan_SubjectArea" FromRole="FirstPlan" ToRole="SubjectArea" />
+          <NavigationProperty Name="FullAndFirst" Relationship="Self.FK_FullAndFirst_FirstPlan" FromRole="FirstPlan" ToRole="FullAndFirst" />
+        </EntityType>
+        <EntityType Name="FullAndFirst">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Id_Plan" />
+            <PropertyRef Name="Id_FPlan" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Plan" Type="Int64" Nullable="false" />
+          <Property Name="Id_FPlan" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="FirstPlan" Relationship="Self.FK_FullAndFirst_FirstPlan" FromRole="FullAndFirst" ToRole="FirstPlan" />
+          <NavigationProperty Name="FullPlan" Relationship="Self.FK_FullAndFirst_FullPlan" FromRole="FullAndFirst" ToRole="FullPlan" />
+        </EntityType>
+        <EntityType Name="FullPlan">
+          <Key>
+            <PropertyRef Name="Id_Plan" />
+          </Key>
+          <Property Name="Id_Plan" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamePlan" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Id_Type" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="FullAndFirst" Relationship="Self.FK_FullAndFirst_FullPlan" FromRole="FullPlan" ToRole="FullAndFirst" />
+          <NavigationProperty Name="Type" Relationship="Self.FK_FullPlan_Type" FromRole="FullPlan" ToRole="Type" />
+        </EntityType>
+        <EntityType Name="Grade">
+          <Key>
+            <PropertyRef Name="Id_Grade" />
+          </Key>
+          <Property Name="Id_Grade" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="FirstPlan" Relationship="Self.FK_FirstPlan_Grade" FromRole="Grade" ToRole="FirstPlan" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK_Schedule_Grade" FromRole="Grade" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="Id_Schedule" />
+          </Key>
+          <Property Name="Id_Schedule" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Grade" Type="Int64" Nullable="false" />
+          <Property Name="Id_Day" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Day" Relationship="Self.FK_Schedule_Day" FromRole="Schedule" ToRole="Day" />
+          <NavigationProperty Name="Grade" Relationship="Self.FK_Schedule_Grade" FromRole="Schedule" ToRole="Grade" />
+          <Property Name="Id_Subject" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Subject" Relationship="PlanningTheEPModel.FK_Schedule_Subject" FromRole="Schedule" ToRole="Subject" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="Id_Subject" />
+          </Key>
+          <Property Name="Id_Subject" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="FirstPlan" Relationship="Self.FK_FirstPlan_Subject" FromRole="Subject" ToRole="FirstPlan" />
+          <NavigationProperty Name="Schedule" Relationship="PlanningTheEPModel.FK_Schedule_Subject" FromRole="Subject" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="SubjectArea">
+          <Key>
+            <PropertyRef Name="Id_SubjectArea" />
+          </Key>
+          <Property Name="Id_SubjectArea" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="FirstPlan" Relationship="Self.FK_FirstPlan_SubjectArea" FromRole="SubjectArea" ToRole="FirstPlan" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="Id_Type" />
+          </Key>
+          <Property Name="Id_Type" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="FullPlan" Relationship="Self.FK_FullPlan_Type" FromRole="Type" ToRole="FullPlan" />
+        </EntityType>
+        <EntityType Name="Worker">
+          <Key>
+            <PropertyRef Name="Id_worker" />
+          </Key>
+          <Property Name="Id_worker" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Position" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Schedule_Day">
+          <End Role="Day" Type="Self.Day" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Day">
+              <PropertyRef Name="Id_Day" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="Id_Day" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FirstPlan_Grade">
+          <End Role="Grade" Type="Self.Grade" Multiplicity="1" />
+          <End Role="FirstPlan" Type="Self.FirstPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grade">
+              <PropertyRef Name="Id_Grade" />
+            </Principal>
+            <Dependent Role="FirstPlan">
+              <PropertyRef Name="Id_Grade" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FirstPlan_Subject">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
+          <End Role="FirstPlan" Type="Self.FirstPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Id_Subject" />
+            </Principal>
+            <Dependent Role="FirstPlan">
+              <PropertyRef Name="Id_Subject" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FirstPlan_SubjectArea">
+          <End Role="SubjectArea" Type="Self.SubjectArea" Multiplicity="0..1" />
+          <End Role="FirstPlan" Type="Self.FirstPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubjectArea">
+              <PropertyRef Name="Id_SubjectArea" />
+            </Principal>
+            <Dependent Role="FirstPlan">
+              <PropertyRef Name="Id_SubjectArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FullAndFirst_FirstPlan">
+          <End Role="FirstPlan" Type="Self.FirstPlan" Multiplicity="1" />
+          <End Role="FullAndFirst" Type="Self.FullAndFirst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirstPlan">
+              <PropertyRef Name="Id_FPlan" />
+            </Principal>
+            <Dependent Role="FullAndFirst">
+              <PropertyRef Name="Id_FPlan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FullAndFirst_FullPlan">
+          <End Role="FullPlan" Type="Self.FullPlan" Multiplicity="1" />
+          <End Role="FullAndFirst" Type="Self.FullAndFirst" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FullPlan">
+              <PropertyRef Name="Id_Plan" />
+            </Principal>
+            <Dependent Role="FullAndFirst">
+              <PropertyRef Name="Id_Plan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FullPlan_Type">
+          <End Role="Type" Type="Self.Type" Multiplicity="1" />
+          <End Role="FullPlan" Type="Self.FullPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="Id_Type" />
+            </Principal>
+            <Dependent Role="FullPlan">
+              <PropertyRef Name="Id_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedule_Grade">
+          <End Role="Grade" Type="Self.Grade" Multiplicity="1" />
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grade">
+              <PropertyRef Name="Id_Grade" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="Id_Grade" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PlanningTheEPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Day" EntityType="Self.Day" />
+          <EntitySet Name="FirstPlan" EntityType="Self.FirstPlan" />
+          <EntitySet Name="FullAndFirst" EntityType="Self.FullAndFirst" />
+          <EntitySet Name="FullPlan" EntityType="Self.FullPlan" />
+          <EntitySet Name="Grade" EntityType="Self.Grade" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" />
+          <EntitySet Name="Subject" EntityType="Self.Subject" />
+          <EntitySet Name="SubjectArea" EntityType="Self.SubjectArea" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Type" EntityType="Self.Type" />
+          <EntitySet Name="Worker" EntityType="Self.Worker" />
+          <AssociationSet Name="FK_Schedule_Day" Association="Self.FK_Schedule_Day">
+            <End Role="Day" EntitySet="Day" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FirstPlan_Grade" Association="Self.FK_FirstPlan_Grade">
+            <End Role="Grade" EntitySet="Grade" />
+            <End Role="FirstPlan" EntitySet="FirstPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FirstPlan_Subject" Association="Self.FK_FirstPlan_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="FirstPlan" EntitySet="FirstPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FirstPlan_SubjectArea" Association="Self.FK_FirstPlan_SubjectArea">
+            <End Role="SubjectArea" EntitySet="SubjectArea" />
+            <End Role="FirstPlan" EntitySet="FirstPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FullAndFirst_FirstPlan" Association="Self.FK_FullAndFirst_FirstPlan">
+            <End Role="FirstPlan" EntitySet="FirstPlan" />
+            <End Role="FullAndFirst" EntitySet="FullAndFirst" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FullAndFirst_FullPlan" Association="Self.FK_FullAndFirst_FullPlan">
+            <End Role="FullPlan" EntitySet="FullPlan" />
+            <End Role="FullAndFirst" EntitySet="FullAndFirst" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FullPlan_Type" Association="Self.FK_FullPlan_Type">
+            <End Role="Type" EntitySet="Type" />
+            <End Role="FullPlan" EntitySet="FullPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Grade" Association="Self.FK_Schedule_Grade">
+            <End Role="Grade" EntitySet="Grade" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedule_Subject" Association="PlanningTheEPModel.FK_Schedule_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="Schedule" EntitySet="Schedule" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Schedule_Subject">
+          <End Type="PlanningTheEPModel.Subject" Role="Subject" Multiplicity="1" />
+          <End Type="PlanningTheEPModel.Schedule" Role="Schedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Id_Subject" />
+            </Principal>
+            <Dependent Role="Schedule">
+              <PropertyRef Name="Id_Subject" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище PlanningTheEPModelContainer" CdmEntityContainer="PlanningTheEPEntities">
+          <EntitySetMapping Name="Day">
+            <EntityTypeMapping TypeName="PlanningTheEPModel.Day">
+              <MappingFragment StoreEntitySet="Day">
+                <ScalarProperty Name="Id_Day" ColumnName="Id_Day" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FirstPlan">
+            <EntityTypeMapping TypeName="PlanningTheEPModel.FirstPlan">
+              <MappingFragment StoreEntitySet="FirstPlan">
+                <ScalarProperty Name="Id_FPlan" ColumnName="Id_FPlan" />
+                <ScalarProperty Name="Id_Subject" ColumnName="Id_Subject" />
+                <ScalarProperty Name="Id_SubjectArea" ColumnName="Id_SubjectArea" />
+                <ScalarProperty Name="Id_Grade" ColumnName="Id_Grade" />
+                <ScalarProperty Name="NumberOfHours" ColumnName="NumberOfHours" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FullAndFirst">
+            <EntityTypeMapping TypeName="PlanningTheEPModel.FullAndFirst">
+              <MappingFragment StoreEntitySet="FullAndFirst">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_Plan" ColumnName="Id_Plan" />
+                <ScalarProperty Name="Id_FPlan" ColumnName="Id_FPlan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FullPlan">
+            <EntityTypeMapping TypeName="PlanningTheEPModel.FullPlan">
+              <MappingFragment StoreEntitySet="FullPlan">
+                <ScalarProperty Name="Id_Plan" ColumnName="Id_Plan" />
+                <ScalarProperty Name="NamePlan" ColumnName="NamePlan" />
+                <ScalarProperty Name="Id_Type" ColumnName="Id_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grade">
+            <EntityTypeMapping TypeName="PlanningTheEPModel.Grade">
+              <MappingFragment StoreEntitySet="Grade">
+                <ScalarProperty Name="Id_Grade" ColumnName="Id_Grade" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schedule">
+            <EntityTypeMapping TypeName="PlanningTheEPModel.Schedule">
+              <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="Id_Subject" ColumnName="Id_Subject" />
+                <ScalarProperty Name="Id_Schedule" ColumnName="Id_Schedule" />
+                <ScalarProperty Name="Id_Grade" ColumnName="Id_Grade" />
+                <ScalarProperty Name="Id_Day" ColumnName="Id_Day" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subject">
+            <EntityTypeMapping TypeName="PlanningTheEPModel.Subject">
+              <MappingFragment StoreEntitySet="Subject">
+                <ScalarProperty Name="Id_Subject" ColumnName="Id_Subject" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubjectArea">
+            <EntityTypeMapping TypeName="PlanningTheEPModel.SubjectArea">
+              <MappingFragment StoreEntitySet="SubjectArea">
+                <ScalarProperty Name="Id_SubjectArea" ColumnName="Id_SubjectArea" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PlanningTheEPModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type">
+            <EntityTypeMapping TypeName="PlanningTheEPModel.Type">
+              <MappingFragment StoreEntitySet="Type">
+                <ScalarProperty Name="Id_Type" ColumnName="Id_Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Worker">
+            <EntityTypeMapping TypeName="PlanningTheEPModel.Worker">
+              <MappingFragment StoreEntitySet="Worker">
+                <ScalarProperty Name="Id_worker" ColumnName="Id_worker" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

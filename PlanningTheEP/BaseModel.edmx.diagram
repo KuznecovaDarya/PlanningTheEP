@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="66bb524182a04b07bd6f48e201ab16d4" Name="Diagram1">
+        <EntityTypeShape EntityType="PlanningTheEPModel.Day" Width="1.5" PointX="3.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanningTheEPModel.FirstPlan" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanningTheEPModel.FullAndFirst" Width="1.5" PointX="5.25" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanningTheEPModel.FullPlan" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanningTheEPModel.Grade" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanningTheEPModel.Schedule" Width="1.5" PointX="6" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanningTheEPModel.Subject" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanningTheEPModel.SubjectArea" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanningTheEPModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanningTheEPModel.Type" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanningTheEPModel.Worker" Width="1.5" PointX="7.75" PointY="7.625" IsExpanded="true" />
+        <AssociationConnector Association="PlanningTheEPModel.FK_Schedule_Day" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanningTheEPModel.FK_FirstPlan_Grade" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanningTheEPModel.FK_FirstPlan_Subject" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanningTheEPModel.FK_FirstPlan_SubjectArea" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanningTheEPModel.FK_FullAndFirst_FirstPlan" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanningTheEPModel.FK_FullAndFirst_FullPlan" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanningTheEPModel.FK_FullPlan_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanningTheEPModel.FK_Schedule_Grade" ManuallyRouted="false" />
+        <AssociationConnector Association="PlanningTheEPModel.FK_Schedule_Subject" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,35 @@
+﻿<Page x:Class="PlanningTheEP.AddEditSchedulePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PlanningTheEP"
+      mc:Ignorable="d" 
+      Title="AddEditSchedulePage" 
+      d:DesignHeight="300" d:DesignWidth="600"
+      Background="Beige">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Класс" Grid.Row="0" FontSize="20"></TextBlock>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="День недели" Grid.Row="1" FontSize="20"></TextBlock>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Предмет" Grid.Row="2" FontSize="20"></TextBlock>
+
+        <ComboBox Height="30" VerticalAlignment="Center" FontSize="20" SelectedItem="{Binding Grade}" x:Name="CBGrade" DisplayMemberPath="Name" IsEditable="True" IsReadOnly="False" StaysOpenOnEdit="True" Grid.Row="0" Grid.Column="1" BorderBrush="GreenYellow"></ComboBox>
+        <ComboBox Height="30" VerticalAlignment="Center" FontSize="20" SelectedItem="{Binding Day}" x:Name="CBDay" DisplayMemberPath="Name" IsEditable="True" IsReadOnly="False" StaysOpenOnEdit="True" Grid.Row="1" Grid.Column="1" BorderBrush="GreenYellow"></ComboBox>
+        <ComboBox Height="30" VerticalAlignment="Center" FontSize="20" SelectedItem="{Binding Subject}" x:Name="CBSubject" DisplayMemberPath="Name" IsEditable="True" IsReadOnly="False" StaysOpenOnEdit="True" Grid.Row="2" Grid.Column="2" BorderBrush="GreenYellow"></ComboBox>
+
+
+
+        <Button Height="40" VerticalAlignment="Center" FontSize="20" Background="GreenYellow" Content="Сохранить" Grid.ColumnSpan="2" Grid.Row="3" Name="BtnSave" Click="BtnSave_Click"></Button>
+    </Grid>
+</Page>

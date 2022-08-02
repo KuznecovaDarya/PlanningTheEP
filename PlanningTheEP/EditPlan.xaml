@@ -1,0 +1,36 @@
+﻿<Page x:Class="PlanningTheEP.EditPlan"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PlanningTheEP"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="600"
+      Title="EditPlan"
+      Background="Beige">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Предметная область" Grid.Row="0" FontSize="20"></TextBlock>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Предмет" Grid.Row="1" FontSize="20"></TextBlock>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Количество часов" Grid.Row="2" FontSize="20"></TextBlock>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Класс" Grid.Row="3" FontSize="20"></TextBlock>
+
+        <ComboBox FontSize="20" SelectedItem="{Binding FirstPlan.SubjectArea}" x:Name="SArea" DisplayMemberPath="Name" IsEditable="True" IsReadOnly="False" StaysOpenOnEdit="True" Grid.Row="0" Grid.Column="1"></ComboBox>
+        <ComboBox FontSize="20" SelectedItem="{Binding FirstPlan.Subject}" x:Name="Subject" DisplayMemberPath="Name" IsEditable="True" IsReadOnly="False" StaysOpenOnEdit="True" Grid.Row="1" Grid.Column="1"></ComboBox>
+        <TextBox FontSize="20" Text="{Binding FirstPlan.NumberOfHours}" x:Name="NOH" Grid.Row="2" Grid.Column="1"></TextBox>
+        <ComboBox FontSize="20" SelectedItem="{Binding FirstPlan.Grade}" x:Name="Grades" DisplayMemberPath="Name" IsEditable="True" IsReadOnly="False" StaysOpenOnEdit="True" Grid.Row="3" Grid.Column="2"></ComboBox>
+
+        <Button Background="GreenYellow" Content="Сохранить" Grid.ColumnSpan="2" Height="40" FontSize="20" Grid.Row="8" Name="BtnSave" Click="BtnSave_Click"></Button>
+    </Grid>
+</Page>
